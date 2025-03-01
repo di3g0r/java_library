@@ -13,16 +13,13 @@ public class Library {
     }
     
     public void addBook(Book book) {
-        // Check if book with same ISBN already exists
         for (Book existingBook : books) {
             if (existingBook.getIsbn().equals(book.getIsbn())) {
-                // Add copies to existing book
                 existingBook.addCopies(book.getTotalCopies());
                 System.out.println("Added copies to existing book.");
                 return;
             }
         }
-        // Add new book
         books.add(book);
     }
     
@@ -45,7 +42,6 @@ public class Library {
                 if (book.removeCopies(copies)) {
                     System.out.println("Removed " + copies + " copies of the book.");
                     
-                    // If no copies left, remove book from the list
                     if (book.getTotalCopies() == 0) {
                         books.remove(book);
                         System.out.println("Book removed from library.");
@@ -77,7 +73,6 @@ public class Library {
         for (Patron patron : patrons) {
             System.out.println("\n" + patron);
             
-            // Display borrowed books for this patron
             List<String> borrowedIsbn = patron.getBorrowedBooks();
             if (!borrowedIsbn.isEmpty()) {
                 System.out.println("\nBorrowed Books:");
@@ -110,13 +105,11 @@ public class Library {
             return;
         }
         
-        // Check if patron already has this book
         if (patron.hasBorrowedBook(isbn)) {
             System.out.println("Patron already has a copy of this book.");
             return;
         }
         
-        // Process borrowing
         book.borrowCopy();
         patron.borrowBook(isbn);
         System.out.println("Book '" + book.getTitle() + "' has been borrowed by " + patron.getName() + ".");
@@ -135,13 +128,11 @@ public class Library {
             return;
         }
         
-        // Check if patron has borrowed this book
         if (!patron.hasBorrowedBook(isbn)) {
             System.out.println("This patron has not borrowed this book.");
             return;
         }
-        
-        // Process return
+
         patron.returnBook(isbn);
         book.returnCopy();
         System.out.println("Book '" + book.getTitle() + "' has been returned by " + patron.getName() + ".");
